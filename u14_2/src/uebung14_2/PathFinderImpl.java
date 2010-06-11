@@ -19,6 +19,7 @@ public class PathFinderImpl extends PathFinder {
     }
 
     public Vector<Point> findPath(int x0, int y0, int x1, int y1) {
+        path.clear();
         System.out.println("Test: " + x0 + " " + y0 + " " + x1 + " " + y1);
         ArrayList<Vertex> verices = getVertices();
         byte[][] byteMap = map.getMatrix();
