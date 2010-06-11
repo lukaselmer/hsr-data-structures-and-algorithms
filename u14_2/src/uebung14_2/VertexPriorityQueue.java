@@ -1,11 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package uebung14_2;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
