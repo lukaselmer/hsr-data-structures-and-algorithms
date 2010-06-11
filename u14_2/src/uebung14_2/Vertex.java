@@ -4,6 +4,9 @@
  */
 package uebung14_2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Lukas Elmer
@@ -11,14 +14,13 @@ package uebung14_2;
 class Vertex {
 
     private int x, y;
-    private byte b;
     private double distance;
     private Vertex parent;
+    private ArrayList<Vertex> incidentVertices = new ArrayList<Vertex>();
 
-    Vertex(int x, int y, byte b) {
+    Vertex(int x, int y) {
         this.x = x;
         this.y = y;
-        this.b = b;
         distance = Double.MAX_VALUE;
     }
 
@@ -26,8 +28,12 @@ class Vertex {
         this.distance = distance;
     }
 
-    Vertex[] getIncidentVertices() {
-        throw new UnsupportedOperationException("Not yet implemented");
+    void addIncidentVertex(Vertex vertex){
+        incidentVertices.add(vertex);
+    }
+
+    ArrayList<Vertex> getIncidentVertices() {
+        return incidentVertices;
     }
 
     double getDistance() {

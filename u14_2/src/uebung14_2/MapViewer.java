@@ -47,6 +47,7 @@ public class MapViewer extends JFrame {
     totWeight = 0;
 
     map = new Map(200, 200, 0.001);
+    //map = new Map(65, 65, 0.01);
 
     JFrame.setDefaultLookAndFeelDecorated(true);
     getContentPane().setLayout(new BorderLayout());

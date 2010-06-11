@@ -19,12 +19,14 @@ public class PathFinderImpl extends PathFinder {
     }
 
     public Vector<Point> findPath(int x0, int y0, int x1, int y1) {
+        System.out.println("Test: " + x0 + " " + y0 + " " + x1 + " " + y1);
         ArrayList<Vertex> verices = getVertices();
         byte[][] byteMap = map.getMatrix();
 
+        System.out.println("Initializing VertexPriorityQueue...");
         VertexPriorityQueue q = new VertexPriorityQueue(map);
-        Vertex start = new Vertex(x0, y0, byteMap[x0][y0]); // set start point
-        Vertex goal = new Vertex(x1, y1, byteMap[x1][y1]); // set goal point
+        Vertex start = new Vertex(x0, y0); // set start point
+        Vertex goal = new Vertex(x1, y1); // set goal point
         for (int i = 0; i < byteMap.length; i++) {
             for (int j = 0; j < byteMap[i].length; j++) {
                 Vertex vertex;
@@ -33,7 +35,7 @@ public class PathFinderImpl extends PathFinder {
                 } else if (i == x1 & j == y1) {
                     vertex = goal;
                 } else {
-                    vertex = new Vertex(i, j, byteMap[i][j]);
+                    vertex = new Vertex(i, j);
                 }
                 //l ← Q.insert(getDistance(v), v)
 
@@ -46,29 +48,42 @@ public class PathFinderImpl extends PathFinder {
                 //setLocator(v,l)
             }
         }
+        System.out.println("Done!");
 
+        System.out.println("Adding incident edges...");
+        q.addIncidentEdges();
+        System.out.println("Done!");
+        //System.out.println(q.get(0, 0).getIncidentVertices().size() + "XXXXXXXXXXXXXXXX");
+
+
+        System.out.println("Calculating path...");
         while (!q.isEmpty()) {
             Vertex u = q.removeMin();
-            Vertex[] edges = u.getIncidentVertices();
-            for (int i = 0; i < edges.length; i++) {
-                Vertex z = edges[i];
-                double distance = u.getDistance() + map.calcDist(u.getX(), u.getY(), z.getX(), z.getY());
-                if (distance < z.getDistance()) {
+            for (Vertex z : u.getIncidentVertices()) {
+                double distance = u.getDistance() + map.calcWeight(u.getX(), u.getY(), z.getX(), z.getY());
+                if (distance <= z.getDistance()) {
                     z.setDistance(distance);
                     z.setParent(u);
-                    q.updateVertex(z);
+                    //q.updateVertex(z);
                 }
             }
         }
+        System.out.println("Done!");
 
+        System.out.println("Drawing path...");
         Vertex current = goal;
-        while(current.getParent() != null){
+        while (current.getParent() != null) {
+            System.out.print(current.getX() + "/" + current.getY() + ", ");
             path.add(new Point(current.getX(), current.getY()));
             current = current.getParent();
         }
 
+        System.out.println("Done!");
+
+        System.out.println("Notify observers...");
         setChanged();
         notifyObservers();
+        System.out.println("Done!");
         return path;
 
         /*// TODO Implement here...
