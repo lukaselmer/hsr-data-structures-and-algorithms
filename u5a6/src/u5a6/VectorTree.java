@@ -12,17 +12,11 @@ public class VectorTree<T> implements TreeInterface<T> {
     private int size = 0;
 
     public VectorTree() {
-        binaryTree = new Vector<T>(1);
-    }
-
-    private boolean isEmpty() {
-        return size == 0;
+        binaryTree = new Vector<T>();
+        binaryTree.setSize(2);
     }
 
     public T root() {
-        if (isEmpty()) {
-            return null;
-        }
         return binaryTree.get(1);
     }
 
@@ -73,7 +67,7 @@ public class VectorTree<T> implements TreeInterface<T> {
     }
 
     public boolean isRoot(T node) {
-        return binaryTree.indexOf(node) == 1;
+        return node.equals(binaryTree.get(1));
     }
 
     public void setLeftChild(T parent, T child) throws NoSuchNodeException {
@@ -116,6 +110,9 @@ public class VectorTree<T> implements TreeInterface<T> {
     }
 
     public void removeLeftChild(T parent) throws NoSuchNodeException {
+        if (parent == null) {
+            return;
+        }
         checkElementExistance(parent);
         int position = binaryTree.indexOf(parent) * 2;
         if (elementAt(position) == null) {
@@ -125,6 +122,9 @@ public class VectorTree<T> implements TreeInterface<T> {
     }
 
     public void removeRightChild(T parent) throws NoSuchNodeException {
+        if (parent == null) {
+            return;
+        }
         checkElementExistance(parent);
         int position = (binaryTree.indexOf(parent) * 2) + 1;
         if (elementAt(position) == null) {
