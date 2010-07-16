@@ -43,6 +43,9 @@ public class PriorityQueue<K extends Comparable<? super K>, V> implements
     }
 
     public Entry<K, V> removeMin() throws EmptyPriorityQueueException {
+        if (isEmpty()) {
+            throw new EmptyPriorityQueueException("Empty queue");
+        }
         return list.poll();
     }
 
